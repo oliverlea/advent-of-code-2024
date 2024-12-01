@@ -6,16 +6,34 @@ from utils import read_file
 def part1(left: List[int], right: List[int]) -> int:
     left.sort()
     right.sort()
-    total = 0
-    for l, r in zip(left, right):
-        total += abs(l - r)
-    return total
+    return sum(abs(l - r) for l, r in zip(left, right))
 
-def part2(left: List[int], right: List[int]) -> int:
-    freqs: Dict[int, int] = defaultdict(lambda: 0)
-    for x in right:
-        freqs[x] += 1
-    return sum(x * freqs[x] for x in left)
+def part2(left_sorted: List[int], right_sorted: List[int]) -> int:
+    # 'optimized' solution using two pointers that relies on the input
+    # already being sorted to solve in linear time
+    result = 0
+    li, ri = 0, 0
+    dist = 0
+    while li < len(left_sorted):
+        while right_sorted[ri] < left_sorted[li]:
+            ri += 1
+            if ri >= len(right_sorted):
+                break
+        if left_sorted[li] == right_sorted[ri]:
+            dist = 0
+            while ri < len(right_sorted) and left_sorted[li] == right_sorted[ri]:
+                dist += 1
+                ri += 1
+            repeats = 0
+            while li + 1 < len(left_sorted) and left_sorted[li + 1] == left_sorted[li]:
+                repeats += 1
+                li += 1
+            result += (left_sorted[li] * dist) * (repeats + 1)
+            li += 1
+        else:
+            li += 1
+
+    return result
 
 if __name__ == '__main__':
     lines = read_file('day01.txt')
