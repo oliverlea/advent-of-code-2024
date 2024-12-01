@@ -4,8 +4,6 @@ from typing import Dict, List, Tuple
 from utils import read_file
 
 def part1(left: List[int], right: List[int]) -> int:
-    left.sort()
-    right.sort()
     return sum(abs(l - r) for l, r in zip(left, right))
 
 def part2(left_sorted: List[int], right_sorted: List[int]) -> int:
@@ -40,5 +38,7 @@ if __name__ == '__main__':
     s = [int(x) for y in lines for x in y.strip().split()]
     left = [s[x] for x in range(0, len(s)) if x % 2 == 0]
     right = [s[x] for x in range(0, len(s)) if x % 2 != 0]
+    left.sort()
+    right.sort()
     print(part1(left, right))
     print(part2(left, right))
