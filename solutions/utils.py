@@ -1,5 +1,5 @@
 
-from typing import List, Tuple
+from typing import Any, List, Tuple
 
 EXPAND = [
     (-1, -1),
@@ -29,3 +29,9 @@ def search(lines: List[str], coord: Tuple[int, int], target: str) -> bool:
         if search(lines, (x + xn, y + yn), next_target):
             return True
     return False
+
+def within_bounds(loc: Tuple[int, int], target: List[Any]) -> bool:
+    x, y = loc
+    if y >= len(target) or y < 0 or x >= len(target[0]) or x < 0:
+        return False
+    return True

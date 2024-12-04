@@ -1,6 +1,6 @@
 
-from typing import List, Tuple
-from utils import read_file
+from typing import List, Optional, Tuple
+from utils import read_file, within_bounds
 
 EXPAND = [
     (-1, -1),
@@ -11,6 +11,19 @@ EXPAND = [
     (-1, 1),
     (0, 1),
     (1, 1)
+]
+
+SAM_MASKS = [
+    [
+        (-1, -1),
+        (0, 0),
+        (1, 1)
+    ],
+    [
+        (1, -1),
+        (0, 0),
+        (-1, 1)
+    ]
 ]
 
 def search_direction(lines: List[str], coord: Tuple[int, int], direction:  Tuple[int, int], target: str) -> bool:
@@ -36,10 +49,30 @@ def part1(lines: List[str]) -> int:
     return result
 
 def part2(lines: List[str]) -> int:
+    def extract_mask(cur: Tuple[int, int], mask: List[Tuple[int, int]]) -> Optional[str]:
+        mask_result: List[str] = []
+        for m in mask:
+            x = cur[0] + m[0]
+            y = cur[1] + m[1]
+            if not within_bounds((x, y), lines):
+                return None
+            mask_result.append(lines[y][x])
+        return "".join(mask_result)
     result = 0
+    for y in range(len(lines)):
+        for x in range(len(lines[0])):
+            valid = True
+            for mask in SAM_MASKS:
+                if extract_mask((x, y), mask) not in {"SAM", "MAS"}:
+                    valid = False
+                    break
+                else:
+                    pass
+            if valid:
+                result += 1
     return result
 
 if __name__ == '__main__':
     lines = [x.strip() for x in read_file('day04.txt')]
     print(part1(lines))
-    # print(part2(lines))
+    print(part2(lines))
