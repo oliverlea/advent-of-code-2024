@@ -14,15 +14,14 @@ def parse(line: str) -> Tuple[int, List[int]]:
     return int(target), values
 
 def solve(xs: List[Tuple[int, List[int]]], ops) -> int:
-    def solvable(target: int, inputs: List[int], cur_sum: int) -> int:
+    def solve(target: int, inputs: List[int], cur_sum: int) -> int:
         if not inputs:
             return target if cur_sum == target else 0
         for op in ops:
-            if (r := op(cur_sum, inputs[0])) <= target and solvable(target, inputs[1:], r):
+            if (r := op(cur_sum, inputs[0])) <= target and solve(target, inputs[1:], r):
                 return target
         return 0
-
-    return sum(target for target, inputs in xs if solvable(target, inputs, 0))
+    return sum(solve(target, inputs, 0) for target, inputs in xs)
 
 if __name__ == '__main__':
     lines = [x.strip() for x in read_file('day07.txt')]
