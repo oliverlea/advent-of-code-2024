@@ -43,3 +43,8 @@ def within_bounds(loc: Loc, target: Grid) -> bool:
     if y >= len(target) or y < 0 or x >= len(target[0]) or x < 0:
         return False
     return True
+
+def distance(l1: Loc, l2: Loc) -> Loc:
+    x = l1[0] - l2[0]
+    y = l1[1] - l2[1]
+    return x, y
