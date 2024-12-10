@@ -1,8 +1,8 @@
 
 import heapq
-from collections import defaultdict, deque
-from typing import Dict, List, Optional, Set
-from utils import distance, read_file, within_bounds, Loc
+from collections import defaultdict
+from typing import List, Optional
+from utils import read_file
 
 def construct_disk(xs: List[int]) -> List[Optional[int]]:
     disk: List[Optional[int]] = [None] * sum(xs)
