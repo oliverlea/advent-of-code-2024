@@ -1,7 +1,6 @@
     
-from collections import defaultdict, deque
-from typing import Dict, List, Optional, Set
-from utils import distance, read_file, within_bounds, Loc
+from typing import List, Set
+from utils import read_file, within_bounds, Loc
 
 DIR_MASK = [
     (0, -1),
