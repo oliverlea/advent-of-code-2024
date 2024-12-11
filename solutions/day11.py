@@ -1,7 +1,7 @@
-from collections import defaultdict, deque
+from collections import defaultdict
 import math
-from typing import Dict, List, Optional, Tuple, Set
-from utils import read_file, within_bounds, Loc
+from typing import Dict, List
+from utils import read_file
 
 def apply_rules(stone: int) -> List[int]:
     if stone == 0:
