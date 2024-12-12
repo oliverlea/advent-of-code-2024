@@ -12,6 +12,13 @@ EXPAND = [
     (1, 1)
 ]
 
+CARDINAL_DIRS = [
+    (0, -1),
+    (1, 0),
+    (0, 1),
+    (-1, 0)
+]
+
 def read_file(fn: str) -> List[str]:
     with open('./input/' + fn, 'r') as f:
         return f.readlines()
@@ -43,6 +50,12 @@ def within_bounds(loc: Loc, target: Grid) -> bool:
     if y >= len(target) or y < 0 or x >= len(target[0]) or x < 0:
         return False
     return True
+
+def expand(loc: Loc) -> List[Loc]:
+    result = [(0, 0)] * 4
+    for i, direction in enumerate(CARDINAL_DIRS):
+        result[i] = (loc[0] + direction[0], loc[1] + direction[1])
+    return result
 
 def distance(l1: Loc, l2: Loc) -> Loc:
     x = l1[0] - l2[0]
